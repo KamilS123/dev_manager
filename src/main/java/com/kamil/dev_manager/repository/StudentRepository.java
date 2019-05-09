@@ -13,4 +13,6 @@ public interface StudentRepository extends JpaRepository<Student,Long> {
 
     @Query("from Student i where i.id=:id")
     Student getStudentById(@Param("id")Long id);
+
+    Student findByUsername(String username);
 }

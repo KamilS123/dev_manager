@@ -11,14 +11,12 @@ import java.util.Optional;
 
 @Service
 public class DbInitService implements CommandLineRunner {
-    private final StudentRepository studentRepository;
+    @Autowired
+    private StudentRepository studentRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-    @Autowired
-    public DbInitService(StudentRepository studentRepository) {
-        this.studentRepository = studentRepository;
-    }
+
     @Override
     public void run(String... args) {
         Optional<Student>isAdmin = studentRepository.findAll().stream()
