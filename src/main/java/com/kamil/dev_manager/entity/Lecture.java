@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
@@ -27,4 +28,7 @@ public class Lecture {
     @Column
     @NotNull
     private String teacher_info;
+
+    @Column
+    private LocalDate lecture_date;
 }
