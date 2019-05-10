@@ -1,17 +1,17 @@
 package com.kamil.dev_manager.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Student {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
+    @Column(name = "student_id")
     private Long id;
 
     @Column
@@ -37,6 +37,12 @@ public class Student {
 
     @Column
     private Integer index_number;
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+    @JoinTable(name = "attandence_list",
+            joinColumns = @JoinColumn(name = "student_id", referencedColumnName = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "lecture_id", referencedColumnName = "lecture_id"))
+    private Set<Lecture>lecturesSet = new HashSet<>();
 
     public Student() {
     }
@@ -49,6 +55,14 @@ public class Student {
         this.year_of_studies = year_of_studies;
         this.name_of_studies = name_of_studies;
         this.index_number = index_number;
+    }
+
+    public Set<Lecture> getLecturesSet() {
+        return lecturesSet;
+    }
+
+    public void setLecturesSet(Set<Lecture> lecturesSet) {
+        this.lecturesSet = lecturesSet;
     }
 
     public Long getId() {
@@ -122,5 +136,4 @@ public class Student {
     public void setIndex_number(Integer index_number) {
         this.index_number = index_number;
     }
-
 }

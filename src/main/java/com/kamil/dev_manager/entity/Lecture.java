@@ -1,17 +1,17 @@
 package com.kamil.dev_manager.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Lecture {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "lecture_id")
     private Long id;
 
     @Column
@@ -25,6 +25,9 @@ public class Lecture {
 
     @Column
     private LocalDate lecture_date;
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.MERGE},mappedBy = "lecturesSet")
+    private Set<Student> studentSet = new HashSet<>();
 
     public Lecture() {
     }
@@ -34,6 +37,14 @@ public class Lecture {
         this.description = description;
         this.teacher_info = teacher_info;
         this.lecture_date = lecture_date;
+    }
+
+    public Set<Student> getStudentSet() {
+        return studentSet;
+    }
+
+    public void setStudentSet(Set<Student> studentSet) {
+        this.studentSet = studentSet;
     }
 
     public Long getId() {
