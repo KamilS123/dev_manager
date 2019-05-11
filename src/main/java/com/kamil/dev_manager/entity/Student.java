@@ -3,8 +3,7 @@ package com.kamil.dev_manager.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 public class Student {
@@ -55,6 +54,12 @@ public class Student {
         this.year_of_studies = year_of_studies;
         this.name_of_studies = name_of_studies;
         this.index_number = index_number;
+    }
+
+    public List<String>getRolesList() {
+        if (this.role.length()>0) {
+            return Arrays.asList(this.role.split(","));
+        }return new ArrayList<>();
     }
 
     public Set<Lecture> getLecturesSet() {
