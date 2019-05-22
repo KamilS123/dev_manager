@@ -1,0 +1,64 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <link rel="stylesheet" href="/css/mainMenu.css">
+    <script src="/js/timer.js"></script>
+    <script src="/js/getRequests.js"></script>
+    <title>Document</title>
+</head>
+<body onload="timer();">
+
+<div id="container">
+    <div id="topMenu">
+        <div id="logo">
+            <img src="/images/PGSLogoS.png" alt="PGS Software" height="100" width="200">
+        </div>
+        <div id="loggedUser">
+            <p>zalogowany jako <span id="logUser" style="color: darkorange">zalogowany user</span></p>
+        </div>
+        <div id="clock">
+        </div>
+    </div>
+    <div style="clear: both"></div>
+    <div id="optionsAndDisplay">
+        <div id="leftOptions">
+            <input class="optionButton" type="submit" value="Student by ID">
+            <input class="optionButton" type="submit" value="Lecture by ID">
+            <input class="optionButton" type="submit" value="All students" onclick="getAllStudents()">
+            <input class="optionButton" type="submit" value="All lectures" onclick="getAllLectures()">
+            <form th:action="@{/addStudentForm}" method="post" style="margin: 0">
+                <input class="optionButton" type="submit" value="Add student">
+            </form>
+            <input class="optionButton" type="submit" value="Add lecture">
+            <input class="optionButton" type="submit" value="All lectures">
+        </div>
+        <div id="displayingPart">
+            <tbody>
+            <table class="tables" id="lectureTable" style="visibility: hidden">
+                <th>Id</th>
+                <th>Tittle</th>
+                <th>Description</th>
+                <th>Teacher_info</th>
+                <th>Lecture_date</th>
+            </table>
+            <table class="tables" id="studentTable" style="visibility: hidden">
+                <th>Id</th>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Email</th>
+                <th>Year_of_studies</th>
+                <th>Name_of_studies</th>
+                <th>Index_number</th>
+            </table>
+            </tbody>
+        </div>
+        <div style="clear: both"></div>
+    </div>
+</div>
+</body>
+

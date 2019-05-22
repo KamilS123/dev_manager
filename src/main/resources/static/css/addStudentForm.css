@@ -1,0 +1,22 @@
+#addingForm
+{
+    width: 350px;
+    height: 600px;
+    margin-top: 150px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    -webkit-box-shadow: 9px 38px 61px 3px rgba(204,181,29,1);
+    -moz-box-shadow: 9px 38px 61px 3px rgba(204,181,29,1);
+    box-shadow: 9px 38px 61px 3px rgba(204,181,29,1);;
+}
+#addingForm input
+{
+    width: 300px;
+    height: 50px;
+    margin-top: 10px;
+}
+#addingForm input:first-child
+{
+    margin-top: 40px;
+}

@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script src="/js/postRequests.js"></script>
+    <link rel="stylesheet" href="/css/addStudentForm.css">
+    <title>Document</title>
+</head>
+<body>
+<form id="addingForm" th:action="@{/mainMenu}" method="post">
+    <input type="text" id="username" name="username" placeholder="Username">
+    <input type="text" id="surname" name="surname" placeholder="Surname">
+    <input type="text" id="email" name="email" placeholder="Email">
+    <input type="text" id="password" name="password" placeholder="Password">
+    <input type="text" id="year_of_studies" name="year_of_studies" placeholder="Year of studies">
+    <input type="text" id="name_of_studies" name="name_of_studies" placeholder="Name of studies">
+    <input type="text" id="index_number" name="index_number" placeholder="Index number">
+    <input type="submit" name="newStudent" value="Add Student" onclick="addNewStudent();">
+</form>
+</body>
+</html>
