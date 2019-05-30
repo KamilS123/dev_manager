@@ -1,12 +1,22 @@
 package com.kamil.dev_manager.service;
 
+import com.kamil.dev_manager.config.securityConfig.UserPrincipal;
 import com.kamil.dev_manager.entity.Lecture;
 import com.kamil.dev_manager.entity.Student;
 import com.kamil.dev_manager.repository.LectureRepository;
 import com.kamil.dev_manager.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.w3c.dom.UserDataHandler;
+
+import javax.servlet.http.HttpServletRequest;
+import java.rmi.NoSuchObjectException;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.List;
@@ -22,6 +32,16 @@ public class AdminService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    //return loggged user name
+    public String getLoggedUser(HttpServletRequest request) {
+        String loggedUser = "";
+        try {
+            loggedUser = request.getUserPrincipal().getName();
+        } catch (Exception ex) {
+            System.out.println("User is not logged in");
+        }
+        return loggedUser;
+    }
     //fetch one student by passing id
     public Student getStudentById(Long id) {
         return studentRepository.getStudentById(id);

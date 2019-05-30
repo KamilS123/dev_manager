@@ -1,0 +1,88 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <link rel="stylesheet" href="/css/mainMenu.css">
+    <script src="/js/timer.js"></script>
+    <script src="/js/getRequests.js"></script>
+    <script src="/js/postRequests.js"></script>
+    <title>Document</title>
+</head>
+<body onload="timer();">
+
+<div id="container">
+    <div id="topMenu">
+        <div id="logo">
+            <img src="/images/PGSLogoS.png" alt="PGS Software" height="100" width="200">
+        </div>
+        <div id="loggedUser">
+            <p>Logged as <span id="logUser" style="color: darkorange; font-size: 30px">logged user</span></p>
+        </div>
+        <div id="clock">
+        </div>
+    </div>
+    <div style="clear: both"></div>
+    <div id="optionsAndDisplay">
+        <div id="leftOptions">
+            <input class="optionButton" type="submit" value="All students" onclick="getAllStudents()">
+            <input class="optionButton" type="submit" value="All lectures" onclick="getAllLectures()">
+            <form th:action="@{/addStudentForm}" method="post">
+                <input class="optionButton" type="submit" value="Add student">
+            </form>
+            <form th:action="@{/addLectureForm}" method="post">
+                <input class="optionButton" type="submit" value="Add lecture">
+            </form>
+            <form method="post" th:action="@{/mainMenu}">
+                <input type="number" id="deleteStudentById" name="deleteId">
+                <input class="optionButton" type="submit" value="Delete student by ID" onclick="deleteStudent()">
+            </form>
+            <form method="post" th:action="@{/mainMenu}">
+                <input type="number" id="deleteLectureById" name="deleteId">
+                <input class="optionButton" type="submit" value="Delete lecture by ID" onclick="deleteLecture()">
+            </form>
+        </div>
+        <div id="displayingPart">
+            <table class="tables" id="lectureTable" style="visibility: hidden">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Tittle</th>
+                    <th>Description</th>
+                    <th>Teacher_info</th>
+                    <th>Lecture_date</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+            <table class="tables" id="studentTable" style="visibility: hidden">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>Email</th>
+                    <th>Year_of_studies</th>
+                    <th>Name_of_studies</th>
+                    <th>Index_number</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="clear: both"></div>
+    </div>
+</div>
+</body>
+

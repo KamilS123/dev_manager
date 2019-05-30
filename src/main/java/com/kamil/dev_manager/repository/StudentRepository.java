@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface StudentRepository extends JpaRepository<Student,Long> {
 
@@ -13,8 +15,11 @@ public interface StudentRepository extends JpaRepository<Student,Long> {
     Student getStudentById(@Param("id")Long id);
 
     @Query("from Student s where s.username=:username")
-    Student findByUsername(@Param("username") String username);
+    Optional<Student> findByUsername(@Param("username") String username);
 
     @Query("delete from Student s where s.id=:id")
     Student deleteStudentById(@Param("id")Long id);
+/*
+    @Query("from Student s where s.username=:username")
+    Student findByUsername(@Param("username") String username);*/
 }
