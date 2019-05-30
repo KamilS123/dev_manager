@@ -45,6 +45,6 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return (this.student.getRole().equals("student") || this.student.getRole().equals("admin"));
+        return true;
     }
 }
