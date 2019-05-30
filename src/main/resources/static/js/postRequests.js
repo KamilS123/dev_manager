@@ -25,3 +25,71 @@ function addNewStudent() {
         }
     });
 }
+function addNewLecture() {
+    var model;
+    model = {
+        tittle: $("#tittle").val(),
+        description: $("#description").val(),
+        teacher_info: $("#teacher_info").val(),
+        lecture_date: $("#lecture_date").val()
+    };
+    console.log("post data " + model);
+    $.ajax({
+        type:"POST",
+        url:"/admin/addLecture",
+        headers: {
+            "Content-Type":"application/json",
+            "Accept":"application/json"
+        },
+        data: JSON.stringify(model),
+        success: function(data){
+            console.log("!!!!POST RESPONSE " + data);
+        },
+        error:function(jqXHR,textStatus,errorThrown){
+        }
+    });
+}
+function deleteStudent() {
+    var model;
+    model = {
+        id: $("#deleteStudentById").val()
+    };
+    console.log(model);
+    $.ajax({
+        type:"DELETE",
+        url:"/admin/deleteStudent/" + model.id,
+        headers: {
+            "Content-Type":"application/json",
+            "Accept":"application/json"
+        },
+        data: JSON.stringify(model),
+        success: function (data) {
+            console.log("usunieto po id " + data)
+        },
+        error:function(jqXHR,textStatus,errorThrown){
+            console.log("jakies bledy")
+        }
+    });
+}
+function deleteLecture() {
+    var model;
+    model = {
+        id: $("#deleteLectureById").val()
+    };
+    console.log(model);
+    $.ajax({
+        type:"DELETE",
+        url:"/admin/deleteLecture/" + model.id,
+        headers: {
+            "Content-Type":"application/json",
+            "Accept":"application/json"
+        },
+        data: JSON.stringify(model),
+        success: function (data) {
+            console.log("usunieto po id " + data)
+        },
+        error:function(jqXHR,textStatus,errorThrown){
+            console.log("jakies bledy")
+        }
+    });
+}
