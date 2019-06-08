@@ -92,7 +92,7 @@ public class AdminService {
         Lecture lectureToDelete = lectureRepository.findAll().stream()
                 .filter(s -> s.getId().equals(id))
                 .findAny()
-                .orElseThrow(() -> new NoSuchElementException("There is no choosen user!!!"));
+                .orElseThrow(() -> new NoSuchElementException("There is no choosen lecture!!!"));
 
         //compare lectures date
         LocalDate lectureDate = lectureToDelete.getLecture_date();

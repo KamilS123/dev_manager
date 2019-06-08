@@ -17,7 +17,10 @@ public class StudentAPI {
     private final Logger LOGGER = Logger.getLogger(AdminAPI.class.getName());
     @Autowired
     private StudentService studentService;
-
+    @GetMapping("/users")
+    public List<Lecture> users(){
+        return this.studentService.getAllLectures();
+    }
     //get all lectures
     @GetMapping("/allLectures")
     private ResponseEntity<List<Lecture>> getAllLectures() {
@@ -33,9 +36,13 @@ public class StudentAPI {
     }
 
     //add to attendanceList logged user
-    @GetMapping("/addToList/{id}")
+    @PostMapping("/addToList/{id}")
     private ResponseEntity<Lecture> addToAttendanceList(@PathVariable("id") Long id) throws ClassNotFoundException {
         LOGGER.log(Level.INFO, "addToList");
         return new ResponseEntity<>(studentService.setAttendendenceToList(id), HttpStatus.CREATED);
     }
+   /* @GetMapping("/showPersonalAttendance")
+    private ResponseEntity<List<Lecture>>showPersonalAttendance() throws ClassNotFoundException {
+        return new ResponseEntity<>(studentService.showStudentAttendancies(),HttpStatus.OK);
+    }*/
 }

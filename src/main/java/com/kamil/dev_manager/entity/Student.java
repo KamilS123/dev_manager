@@ -13,20 +13,20 @@ public class Student {
     @Column(name = "student_id")
     private Long id;
 
-    @Column
+    @Column(nullable = false,unique = true)
     private String username;
 
-    @Column
+    @Column(nullable = false)
     private String surname;
 
-    @Column
+    @Column(unique = true)
     private String email;
 
-    @Column
+    @Column(nullable = false)
     private String password;
 
-    @Column
-    private String role;
+
+    private String role = "";
 
     @Column
     private Integer year_of_studies;
@@ -36,9 +36,13 @@ public class Student {
 
     @Column
     private Integer index_number;
+
+
+    private String permisions = "";
+
     @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST,CascadeType.MERGE})
-    @JoinTable(name = "attandence_list",
+    @JoinTable(name = "attendance_list",
             joinColumns = @JoinColumn(name = "student_id", referencedColumnName = "student_id"),
             inverseJoinColumns = @JoinColumn(name = "lecture_id", referencedColumnName = "lecture_id"))
     private Set<Lecture>lecturesSet = new HashSet<>();
@@ -46,7 +50,7 @@ public class Student {
     public Student() {
     }
 
-    public Student(String username, String surname, String email, String password, Integer year_of_studies, String name_of_studies, Integer index_number) {
+    public Student(String username, String surname, String email, String password, Integer year_of_studies, String name_of_studies, Integer index_number, String permisions) {
         this.username = username;
         this.surname = surname;
         this.email = email;
@@ -54,6 +58,8 @@ public class Student {
         this.year_of_studies = year_of_studies;
         this.name_of_studies = name_of_studies;
         this.index_number = index_number;
+        this.permisions = permisions;
+        this.role = "student";
     }
 
     public List<String>getRolesList() {
@@ -62,6 +68,11 @@ public class Student {
         }return new ArrayList<>();
     }
 
+    public List<String>getPermisionsList() {
+        if (this.permisions.length() > 0) {
+            return Arrays.asList(this.permisions.split(","));
+        }return new ArrayList<>();
+    }
     public Set<Lecture> getLecturesSet() {
         return lecturesSet;
     }

@@ -14,7 +14,7 @@ public class Lecture {
     @Column(name = "lecture_id")
     private Long id;
 
-    @Column
+    @Column(nullable = false, unique = true)
     private String tittle;
 
     @Column

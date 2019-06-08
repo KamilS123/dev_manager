@@ -29,24 +29,14 @@
     <p id="orangeLine"></p>
     <div id="optionsAndDisplay">
         <div id="leftOptions">
-            <input class="optionButton" type="submit" value="All students" onclick="getAllStudents()">
-            <input class="optionButton" type="submit" value="All lectures" onclick="getAllLectures()">
-            <form th:action="@{/addStudentForm}" method="post" style="margin-top:0px;">
-                <input class="optionButton" type="submit" value="Add student">
-            </form>
-            <form th:action="@{/addLectureForm}" method="post">
-                <input class="optionButton" type="submit" value="Add lecture">
-            </form>
-            <form method="post" th:action="@{/mainMenu}">
-                <input type="number" id="deleteStudentById" name="deleteId" placeholder="Pass number">
-                <input class="optionButton" type="submit" value="Delete student by ID" onclick="deleteStudent()">
-            </form>
-            <form method="post" th:action="@{/mainMenu}">
-                <input type="number" id="deleteLectureById" name="deleteId" placeholder="Pass number">
-                <input class="optionButton" type="submit" value="Delete lecture by ID" onclick="deleteLecture()">
-            </form>
+                <input class="optionButton" type="submit" value="All lectures" onclick="getAllLectures()">
+
+                <input type="number" id="addToList" name="addToList" placeholder="Add lecture id attendance">
+                <input class="optionButton" type="submit" value="Add to attendance" onclick="addToAttendancee()">
+                <input class="optionButton" type="submit" value="My attendance">
+
             <form method="post" th:action="@{/logout}">
-                <input class="optionButton" type="submit" th:value="Logout">
+                <input class="optionButton" type="submit" value="Logout">
             </form>
         </div>
         <div id="displayingPart">
@@ -87,9 +77,6 @@
             </table>
         </div>
         <div style="clear: both"></div>
-        <div id="footer">
-            <p>for</p>
-        </div>
     </div>
 </div>
 </body>
