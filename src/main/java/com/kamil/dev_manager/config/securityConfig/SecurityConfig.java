@@ -19,7 +19,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private UserPrincipalDetailsService userPrincipalDetailsService;
 
     @Autowired
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) {
 //        auth.inMemoryAuthentication()
 //                .withUser("user").password(passwordEncoder().encode("user")).roles("user")
 //                .and()
@@ -32,10 +32,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/login").permitAll()
-                .antMatchers("/common").permitAll()
-                .antMatchers("/admin/**").authenticated()
-                .antMatchers("/student/**").permitAll()
-                .anyRequest().authenticated()
+                .antMatchers("/student/users").hasAuthority("permitAdmin")
+                .antMatchers("/admin/**").hasAuthority("permitAdmin")
+                .antMatchers("/student/**").hasAnyAuthority("permitAdmin","permitUser")
                 .and()
                 .formLogin()
                 .successForwardUrl("/mainMenu").failureForwardUrl("/login")
@@ -46,11 +45,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic();
     }
 
+
     @Bean
     protected DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
-        daoAuthenticationProvider.setUserDetailsService(userPrincipalDetailsService);
+        daoAuthenticationProvider.setUserDetailsService(this.userPrincipalDetailsService);
         return daoAuthenticationProvider;
     }
 

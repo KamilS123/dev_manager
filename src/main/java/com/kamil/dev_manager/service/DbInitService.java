@@ -29,11 +29,18 @@ public class DbInitService implements CommandLineRunner {
                 .filter(s->s.getRole().equals("admin"))
                 .findFirst();
         if (!isAdmin.isPresent()) {
-            Student admin = new Student("Jan", "Kowalski", "win@wp.pl", passwordEncoder.encode("admin"), 2, "Polski", 258256);
+            Student admin = new Student("Jan", "Kowalski", "win@wp.pl", passwordEncoder.encode("admin"), 2, "Fizyka", 258256,"permitAdmin");
             admin.setRole("admin");
             studentRepository.save(admin);
         }
-
+        Optional<Student>isStudent = studentRepository.findAll().stream()
+                .filter(s->s.getRole().equals("student"))
+                .findFirst();
+        if (!isStudent.isPresent()) {
+            Student student = new Student("Kamil", "Superson", "win@wp.pl", passwordEncoder.encode("student"), 2, "Fizyka", 258256,"permitUser");
+            student.setRole("student");
+            studentRepository.save(student);
+        }
         //checking if lecture exists. If not than create new lecture
         int lectureSize = lectureRepository.findAll().size();
         if (lectureSize==0) {

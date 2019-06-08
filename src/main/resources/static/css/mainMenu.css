@@ -62,7 +62,6 @@
     float: left;
     width: 996px;
     height: 100%;
-    border: 2px solid darkorange;
 }
 .optionButton
 {
@@ -76,4 +75,11 @@
 .optionButton:hover
 {
     background-color: orange;
+}
+#orangeLine
+{
+    width: 1000px;
+    height: 10px;
+    background-color: orange;
+    margin: 10px auto auto auto;
 }

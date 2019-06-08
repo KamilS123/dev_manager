@@ -9,7 +9,7 @@
 </head>
 <body>
 <div>
-    <form action="/web" method="post" >
+    <form th:action="@{/mainMenu}" method="post" >
         <input type="text" id="username" name="username" placeholder="Username"/>
         <input type="password" id="password" name="password" placeholder="Password"/>
         <input type="submit" value="Log in"/>

@@ -80,4 +80,16 @@ public class StudentService {
         lectureRepository.save(choosenLecture);
         return choosenLecture;
     }
+//    public List<Lecture> showStudentAttendancies() throws ClassNotFoundException {
+//        authenticationPrincipal = SecurityContextHolder.getContext().getAuthentication();
+//        Optional<Student>loggedStudent = Optional.of(studentRepository.findAll().stream()
+//                .filter(s -> s.getUsername().equals(authenticationPrincipal.getName()))
+//                .findFirst()
+//                .orElseThrow(() -> new ClassNotFoundException("There is no logged user")));
+//        Student student = loggedStudent.get();
+//        Long studentId = student.getId();
+//        List<Lecture>listWithAttentances = lectureRepository.allLecturesOnList(studentId).stream()
+//                .forEach(s->s.);
+//        return lectureRepository.allLecturesOnList(studentId);
+//    }
 }

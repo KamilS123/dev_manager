@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,6 +19,12 @@ public class AdminAPI {
     @Autowired
     private AdminService adminService;
 
+    @GetMapping("/attendance")
+    public Set<Lecture> attendances() {
+         Student student = new Student();
+
+        return student.getLecturesSet();
+    }
     //find student by id
     @GetMapping("/getStudentById/{id}")
     public ResponseEntity<Student> getStudentById(@PathVariable("id")Long id) {
@@ -44,7 +51,7 @@ public class AdminAPI {
     public HttpStatus deleteStudentById(@PathVariable("id")Long id) {
         LOGGER.log(Level.INFO,"deleteStudent");
         adminService.deleteStudentById(id);
-        return HttpStatus.MOVED_PERMANENTLY;
+        return HttpStatus.NO_CONTENT;
     }
 
     //edit student details
@@ -65,7 +72,7 @@ public class AdminAPI {
     public HttpStatus deleteLectureById(@PathVariable("id")Long id) {
         LOGGER.log(Level.INFO,"deleteLecture");
         adminService.deleteLectureById(id);
-        return HttpStatus.MOVED_PERMANENTLY;
+        return HttpStatus.NO_CONTENT;
     }
 
     //edit lecture by id
