@@ -152,4 +152,21 @@ public class Student {
     public void setIndex_number(Integer index_number) {
         this.index_number = index_number;
     }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", surname='" + surname + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", role='" + role + '\'' +
+                ", year_of_studies=" + year_of_studies +
+                ", name_of_studies='" + name_of_studies + '\'' +
+                ", index_number=" + index_number +
+                ", permisions='" + permisions + '\'' +
+                ", lecturesSet=" + lecturesSet +
+                '}';
+    }
 }

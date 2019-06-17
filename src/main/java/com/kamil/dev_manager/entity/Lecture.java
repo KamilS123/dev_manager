@@ -86,4 +86,16 @@ public class Lecture {
     public void setLecture_date(LocalDate lecture_date) {
         this.lecture_date = lecture_date;
     }
+
+    @Override
+    public String toString() {
+        return "Lecture{" +
+                "id=" + id +
+                ", tittle='" + tittle + '\'' +
+                ", description='" + description + '\'' +
+                ", teacher_info='" + teacher_info + '\'' +
+                ", lecture_date=" + lecture_date +
+                ", studentSet=" + studentSet +
+                '}';
+    }
 }
