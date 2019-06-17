@@ -12,31 +12,28 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @RestController
-@RequestMapping("/student")
+@RequestMapping("/user")
 public class StudentAPI {
     private final Logger LOGGER = Logger.getLogger(AdminAPI.class.getName());
     @Autowired
     private StudentService studentService;
-    @GetMapping("/users")
-    public List<Lecture> users(){
-        return this.studentService.getAllLectures();
-    }
+
     //get all lectures
-    @GetMapping("/allLectures")
+    @GetMapping("/lectures")
     private ResponseEntity<List<Lecture>> getAllLectures() {
         LOGGER.log(Level.INFO, "allLectures");
         return new ResponseEntity<>(studentService.getAllLectures(), HttpStatus.OK);
     }
 
     //set password
-    @PutMapping("/setPassword/{newPassword}/{repeatedPassword}")
+    @PutMapping("/password/{newPassword}/{repeatedPassword}")
     private ResponseEntity<Student> setPassword(@PathVariable("newPassword") String newPassword, @PathVariable("repeatedPassword") String repeatedPassword) throws Exception {
         LOGGER.log(Level.INFO, "setPassword");
         return new ResponseEntity<>(studentService.editStudentPassword(newPassword, repeatedPassword), HttpStatus.OK);
     }
 
     //add to attendanceList logged user
-    @PostMapping("/addToList/{id}")
+    @PostMapping("/toList/{id}")
     private ResponseEntity<Lecture> addToAttendanceList(@PathVariable("id") Long id) throws ClassNotFoundException {
         LOGGER.log(Level.INFO, "addToList");
         return new ResponseEntity<>(studentService.setAttendendenceToList(id), HttpStatus.CREATED);

@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class UserPrincipal implements UserDetails {
     private Student student;
@@ -19,9 +18,6 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        /*return student.getRolesList().stream()
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toSet());*/
        List<GrantedAuthority> authorities = new ArrayList<>();
         this.student.getRolesList().forEach(r->{
             GrantedAuthority authority = new SimpleGrantedAuthority(r);
@@ -61,7 +57,6 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        /*return this.student.getActive()==1;*/
         return true;
     }
 }

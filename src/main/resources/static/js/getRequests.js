@@ -1,6 +1,6 @@
 function getAllStudents() {
     $.ajax({
-        url: "/admin/getAllStudents",
+        url: "/admin/students",
         type:"GET",
         success: function(result) {
             $('#displayingPart tbody').empty();
@@ -16,7 +16,7 @@ function getAllStudents() {
 }
 function getAllLectures() {
     $.ajax({
-        url: "/student/allLectures",
+        url: "/user/lectures",
         type:"GET",
         success: function (result) {
             $('#displayingPart tbody').empty();

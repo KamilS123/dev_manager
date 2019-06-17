@@ -12,7 +12,7 @@ function addNewStudent() {
     console.log("post data " + model);
     $.ajax({
         type:"POST",
-        url:"/admin/addStudent",
+        url:"/admin/newStudent",
         headers: {
             "Content-Type":"application/json",
             "Accept":"application/json"
@@ -36,7 +36,7 @@ function addNewLecture() {
     console.log("post data " + model);
     $.ajax({
         type:"POST",
-        url:"/admin/addLecture",
+        url:"/admin/newLecture",
         headers: {
             "Content-Type":"application/json",
             "Accept":"application/json"
@@ -57,7 +57,7 @@ function deleteStudent() {
     console.log(model);
     $.ajax({
         type:"DELETE",
-        url:"/admin/deleteStudent/" + model.id,
+        url:"/admin/student/" + model.id,
         headers: {
             "Content-Type":"application/json",
             "Accept":"application/json"
@@ -80,7 +80,7 @@ function deleteLecture() {
     console.log(model);
     $.ajax({
         type: "DELETE",
-        url: "/admin/deleteLecture/" + model.id,
+        url: "/admin/lecture/" + model.id,
         headers: {
             "Content-Type": "application/json",
             "Accept": "application/json"
@@ -103,7 +103,7 @@ function deleteLecture() {
         console.log(model);
         $.ajax({
             type:"POST",
-            url:"/student/addToList/" + model.id,
+            url:"/user/toList/" + model.id,
             headers: {
                 "Content-Type":"application/json",
                 "Accept":"application/json"
