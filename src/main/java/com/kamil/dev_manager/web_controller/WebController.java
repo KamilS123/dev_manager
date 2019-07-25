@@ -14,13 +14,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.WebApplicationContext;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Controller
 public class WebController {
+
+    private final Logger logger = Logger.getLogger(WebApplicationContext.class.getName());
     @Autowired
     private AdminService adminService;
     @Autowired
@@ -28,32 +32,41 @@ public class WebController {
 
     @GetMapping("/loggedUser")
     public ResponseEntity<String> loggedUser(HttpServletRequest httpServletRequest) {
+        logger.log(Level.INFO, "loggedUser");
         return new ResponseEntity<>(adminService.getLoggedUser(httpServletRequest), HttpStatus.OK);
     }
+
     @RequestMapping("/mainMenu")
     public String homePage(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Optional<Student> loggedUser = adminService.getAllStudents().stream()
-                .filter(s->s.getUsername().equals(auth.getName()))
+                .filter(s -> s.getUsername().equals(auth.getName()))
                 .findFirst();
         Student student = loggedUser.get();
         String loggedRole = student.getRole();
         String returnedPlace = "";
-       switch (loggedRole) {
-           case "ROLE_STUDENT": returnedPlace = "studentMenu";
-           break;
-           case "ROLE_ADMIN" : returnedPlace = "mainMenu";
-           break;
-       }
-       model.addAttribute("listWithLectures",studentService.getAllLectures());
+        switch (loggedRole) {
+            case "ROLE_STUDENT":
+                returnedPlace = "studentMenu";
+                break;
+            case "ROLE_ADMIN":
+                returnedPlace = "mainMenu";
+                break;
+        }
+        model.addAttribute("listWithLectures", studentService.getAllLectures());
+        logger.log(Level.INFO, "mainMenu");
         return returnedPlace;
     }
+
     @RequestMapping("/addStudentForm")
     public String addStudentForm() {
+        logger.log(Level.INFO, "addStudentForm");
         return "addStudentForm";
     }
+
     @RequestMapping("/addLectureForm")
     public String addLectureForm() {
+        logger.log(Level.INFO, "addLectureForm");
         return "addLectureForm";
     }
 
@@ -64,9 +77,9 @@ public class WebController {
                 .findFirst()
                 .orElseThrow(() -> new ClassNotFoundException("Lecture not found")));
         Lecture lecture = lectureList.get();
-
-        model.addAttribute("lecture",lecture.getDescription());
-        model.addAttribute("listWithLectures",studentService.getAllLectures());
+        model.addAttribute("lecture", lecture.getDescription());
+        model.addAttribute("listWithLectures", studentService.getAllLectures());
+        logger.log(Level.INFO, "selectSingleLecture");
         return "mainMenu";
     }
 }

@@ -14,14 +14,9 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @Service
 public class AdminService {
-
-    private final Logger logger = Logger.getLogger(AdminService.class.getName());
-
     @Autowired
     private StudentRepository studentRepository;
     @Autowired
@@ -37,9 +32,9 @@ public class AdminService {
         } catch (Exception ex) {
             System.out.println("User is not logged in");
         }
-        logger.log(Level.INFO,"getLoggedUser");
         return loggedUser;
     }
+
     //fetch one student by passing id
     public Student getStudentById(Long id) {
         return studentRepository.getStudentById(id);

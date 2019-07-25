@@ -12,7 +12,7 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
-public class DbInitService implements CommandLineRunner {
+public class DbInit implements CommandLineRunner {
     @Autowired
     private StudentRepository studentRepository;
     @Autowired

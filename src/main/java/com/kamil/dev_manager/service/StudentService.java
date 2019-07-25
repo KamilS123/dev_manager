@@ -10,7 +10,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,11 +17,13 @@ import java.util.Optional;
 
 @Service
 public class StudentService {
+
     @Autowired
     private LectureRepository lectureRepository;
 
     @Autowired
     private StudentRepository studentRepository;
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -36,7 +37,7 @@ public class StudentService {
     //edit logged user password by passing twice the same details
     public Student editStudentPassword(String newPassword, String repeatedNewPassword) throws Exception {
         //authentication logged user
-        authenticationPrincipal  = SecurityContextHolder.getContext().getAuthentication();
+        authenticationPrincipal = SecurityContextHolder.getContext().getAuthentication();
         Student student;
         String authenticatedName = authenticationPrincipal.getName();
 
@@ -49,18 +50,19 @@ public class StudentService {
                     .findFirst()
                     .orElseThrow(() -> new UsernameNotFoundException("there is no logged user")));
 
-                Long studentId = checkLoggedStudent.get();
-                student = studentRepository.getStudentById(studentId);
-                student.setPassword(passwordEncoder.encode(newPassword));
-                studentRepository.save(student);
-        }else {
+            Long studentId = checkLoggedStudent.get();
+            student = studentRepository.getStudentById(studentId);
+            student.setPassword(passwordEncoder.encode(newPassword));
+            studentRepository.save(student);
+        } else {
             throw new Exception("passwords not equals");
         }
         return student;
     }
+
     public Lecture setAttendendenceToList(Long id) throws ClassNotFoundException {
         //check choosen Lecture if exist
-        Optional<Lecture>listWithLectures = Optional.of(lectureRepository.findAll().stream()
+        Optional<Lecture> listWithLectures = Optional.of(lectureRepository.findAll().stream()
                 .filter(s -> s.getId().equals(id))
                 .findFirst()
                 .orElseThrow(() -> new ClassNotFoundException("There is no lecture with passed id!!!")));
@@ -70,10 +72,10 @@ public class StudentService {
         authenticationPrincipal = SecurityContextHolder.getContext().getAuthentication();
         String authenticatedName = authenticationPrincipal.getName();
 
-        Optional<Student>listWithStudent = Optional.of(studentRepository.findAll().stream()
-                .filter(s->s.getUsername().equals(authenticatedName))
+        Optional<Student> listWithStudent = Optional.of(studentRepository.findAll().stream()
+                .filter(s -> s.getUsername().equals(authenticatedName))
                 .findFirst()
-                .orElseThrow(()->new ClassNotFoundException("There is no logged user!!!")));
+                .orElseThrow(() -> new ClassNotFoundException("There is no logged user!!!")));
         Student loggedStudent = listWithStudent.get();
 
         //save to database
@@ -83,36 +85,30 @@ public class StudentService {
         lectureRepository.save(choosenLecture);
         return choosenLecture;
     }
+
     public List<Lecture> showStudentAttendancies() throws ClassNotFoundException {
         authenticationPrincipal = SecurityContextHolder.getContext().getAuthentication();
-        Optional<Student>loggedStudent = Optional.of(studentRepository.findAll().stream()
+        Optional<Student> loggedStudent = Optional.of(studentRepository.findAll().stream()
                 .filter(s -> s.getUsername().equals(authenticationPrincipal.getName()))
                 .findFirst()
                 .orElseThrow(() -> new ClassNotFoundException("There is no logged user")));
         Student student = loggedStudent.get();
         Long studentId = student.getId();
 
-        List<Long>lecturesOnStudentList = studentRepository.allLecturesOnList(studentId);
+        List<Long> lecturesOnStudentList = studentRepository.allLecturesOnList(studentId);
 
-        List<Lecture>allLecturesList = lectureRepository.findAll();
+        List<Lecture> allLecturesList = lectureRepository.findAll();
 
-        List<Lecture>personalStudentListWithAttendancies = new ArrayList<>();
+        List<Lecture> personalStudentListWithAttendancies = new ArrayList<>();
         int indexing = 0;
 
-        for(Lecture ids : allLecturesList) {
-            for(Long studId : lecturesOnStudentList) {
-                if (ids.getId()==studId) {
+        for (Lecture ids : allLecturesList) {
+            for (Long studId : lecturesOnStudentList) {
+                if (ids.getId() == studId) {
                     personalStudentListWithAttendancies.add(ids);
                     indexing++;
                 }
             }
-        }
-
-        System.out.println("Student ajdi to" + studentId + "\n");
-
-        for(Long l : lecturesOnStudentList) {
-            System.out.println("lectures on student list " + l);
-
         }
         return personalStudentListWithAttendancies;
     }
