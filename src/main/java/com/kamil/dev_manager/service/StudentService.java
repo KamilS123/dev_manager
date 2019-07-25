@@ -10,6 +10,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -80,16 +83,37 @@ public class StudentService {
         lectureRepository.save(choosenLecture);
         return choosenLecture;
     }
-//    public List<Lecture> showStudentAttendancies() throws ClassNotFoundException {
-//        authenticationPrincipal = SecurityContextHolder.getContext().getAuthentication();
-//        Optional<Student>loggedStudent = Optional.of(studentRepository.findAll().stream()
-//                .filter(s -> s.getUsername().equals(authenticationPrincipal.getName()))
-//                .findFirst()
-//                .orElseThrow(() -> new ClassNotFoundException("There is no logged user")));
-//        Student student = loggedStudent.get();
-//        Long studentId = student.getId();
-//        List<Lecture>listWithAttentances = lectureRepository.allLecturesOnList(studentId).stream()
-//                .forEach(s->s.);
-//        return lectureRepository.allLecturesOnList(studentId);
-//    }
+    public List<Lecture> showStudentAttendancies() throws ClassNotFoundException {
+        authenticationPrincipal = SecurityContextHolder.getContext().getAuthentication();
+        Optional<Student>loggedStudent = Optional.of(studentRepository.findAll().stream()
+                .filter(s -> s.getUsername().equals(authenticationPrincipal.getName()))
+                .findFirst()
+                .orElseThrow(() -> new ClassNotFoundException("There is no logged user")));
+        Student student = loggedStudent.get();
+        Long studentId = student.getId();
+
+        List<Long>lecturesOnStudentList = studentRepository.allLecturesOnList(studentId);
+
+        List<Lecture>allLecturesList = lectureRepository.findAll();
+
+        List<Lecture>personalStudentListWithAttendancies = new ArrayList<>();
+        int indexing = 0;
+
+        for(Lecture ids : allLecturesList) {
+            for(Long studId : lecturesOnStudentList) {
+                if (ids.getId()==studId) {
+                    personalStudentListWithAttendancies.add(ids);
+                    indexing++;
+                }
+            }
+        }
+
+        System.out.println("Student ajdi to" + studentId + "\n");
+
+        for(Long l : lecturesOnStudentList) {
+            System.out.println("lectures on student list " + l);
+
+        }
+        return personalStudentListWithAttendancies;
+    }
 }

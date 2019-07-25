@@ -1,30 +1,27 @@
 package com.kamil.dev_manager.service;
 
-import com.kamil.dev_manager.config.securityConfig.UserPrincipal;
 import com.kamil.dev_manager.entity.Lecture;
 import com.kamil.dev_manager.entity.Student;
 import com.kamil.dev_manager.repository.LectureRepository;
 import com.kamil.dev_manager.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.w3c.dom.UserDataHandler;
 
 import javax.servlet.http.HttpServletRequest;
-import java.rmi.NoSuchObjectException;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Service
 public class AdminService {
+
+    private final Logger logger = Logger.getLogger(AdminService.class.getName());
+
     @Autowired
     private StudentRepository studentRepository;
     @Autowired
@@ -40,6 +37,7 @@ public class AdminService {
         } catch (Exception ex) {
             System.out.println("User is not logged in");
         }
+        logger.log(Level.INFO,"getLoggedUser");
         return loggedUser;
     }
     //fetch one student by passing id
@@ -54,14 +52,13 @@ public class AdminService {
 
     //adding new lecture to database
     public Lecture addNewLecture(Lecture lecture) {
-        lectureRepository.save(lecture);
-        return lecture;
+        return lectureRepository.save(lecture);
     }
 
     //adding new student to database
     public Student addStudent(Student student) {
         //set up constatn schema
-        student.setRole("student");
+        student.setRole("ROLE_STUDENT");
         student.setPassword(passwordEncoder.encode(student.getPassword()));
         return studentRepository.save(student);
     }
@@ -76,7 +73,7 @@ public class AdminService {
         Optional<Student> studentToEdit = studentRepository.findById(id);
         Student editedStudent = studentToEdit.get();
         editedStudent.setPassword(passwordEncoder.encode(student.getPassword()));
-        editedStudent.setRole("student");
+        editedStudent.setRole("ROLE_STUDENT");
         editedStudent.setEmail(student.getEmail());
         editedStudent.setIndex_number(student.getIndex_number());
         editedStudent.setSurname(student.getSurname());
@@ -86,14 +83,12 @@ public class AdminService {
         return studentRepository.save(editedStudent);
     }
 
-    //delete lecture from databese by passing id
     public void deleteLectureById(Long id) {
         //check if lecture with passed id exists
         Lecture lectureToDelete = lectureRepository.findAll().stream()
                 .filter(s -> s.getId().equals(id))
                 .findAny()
                 .orElseThrow(() -> new NoSuchElementException("There is no choosen lecture!!!"));
-
         //compare lectures date
         LocalDate lectureDate = lectureToDelete.getLecture_date();
         LocalDate currentDate = LocalDate.now();

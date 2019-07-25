@@ -45,6 +45,14 @@
                 <input type="number" id="deleteLectureById" name="deleteId" placeholder="Pass number">
                 <input class="optionButton" type="submit" value="Delete lecture by ID" onclick="deleteLecture()">
             </form>
+
+            <form method="post" th:action="@{/selectSingleLecture}">
+                <select th:field="*{description}">
+                    <option th:each="lectur: ${listWithLectures}" th:value="${lectur}" th:text="${lectur.getDescription()}" th:selected="true">opt1</option>
+                </select>
+            <input class="optionButton" type="submit" value="Select Lecture to check">
+            </form>
+
             <form method="post" th:action="@{/logout}">
                 <input class="optionButton" type="submit" th:value="Logout">
             </form>
@@ -85,10 +93,10 @@
                 </tr>
                 </tbody>
             </table>
+            <h3 th:text="${lecture}" ></h3>
         </div>
         <div style="clear: both"></div>
         <div id="footer">
-            <p>for</p>
         </div>
     </div>
 </div>

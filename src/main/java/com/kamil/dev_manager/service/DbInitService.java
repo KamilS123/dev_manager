@@ -17,28 +17,26 @@ public class DbInitService implements CommandLineRunner {
     private StudentRepository studentRepository;
     @Autowired
     private LectureRepository lectureRepository;
-
     @Autowired
     private PasswordEncoder passwordEncoder;
-
 
     @Override
     public void run(String... args) {
         //chacking if admin exists. If no than create new admin
         Optional<Student>isAdmin = studentRepository.findAll().stream()
-                .filter(s->s.getRole().equals("admin"))
+                .filter(s->s.getRole().equals("ROLE_ADMIN"))
                 .findFirst();
         if (!isAdmin.isPresent()) {
             Student admin = new Student("Jan", "Kowalski", "win@wp.pl", passwordEncoder.encode("admin"), 2, "Fizyka", 258256,"permitAdmin");
-            admin.setRole("admin");
+            admin.setRole("ROLE_ADMIN");
             studentRepository.save(admin);
         }
         Optional<Student>isStudent = studentRepository.findAll().stream()
-                .filter(s->s.getRole().equals("student"))
+                .filter(s->s.getRole().equals("ROLE_STUDENT"))
                 .findFirst();
         if (!isStudent.isPresent()) {
             Student student = new Student("Kamil", "Superson", "win@wp.pl", passwordEncoder.encode("student"), 2, "Fizyka", 258256,"permitUser");
-            student.setRole("student");
+            student.setRole("ROLE_STUDENT");
             studentRepository.save(student);
         }
         //checking if lecture exists. If not than create new lecture

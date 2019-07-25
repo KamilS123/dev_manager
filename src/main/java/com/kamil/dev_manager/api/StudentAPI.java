@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,8 +39,9 @@ public class StudentAPI {
         LOGGER.log(Level.INFO, "addToList");
         return new ResponseEntity<>(studentService.setAttendendenceToList(id), HttpStatus.CREATED);
     }
-   /* @GetMapping("/showPersonalAttendance")
-    private ResponseEntity<List<Lecture>>showPersonalAttendance() throws ClassNotFoundException {
-        return new ResponseEntity<>(studentService.showStudentAttendancies(),HttpStatus.OK);
-    }*/
+
+    @GetMapping("/attendance")
+    private ResponseEntity<List<Lecture>> showPersonalAttendance() throws ClassNotFoundException {
+        return new ResponseEntity<>(studentService.showStudentAttendancies(), HttpStatus.OK);
+    }
 }

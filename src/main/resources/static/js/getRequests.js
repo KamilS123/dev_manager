@@ -30,6 +30,22 @@ function getAllLectures() {
         }
     });
 }
+function personalStudentAttendencies() {
+    $.ajax({
+        url: "/user/attendance",
+        type:"GET",
+        success: function (result) {
+            $('#displayingPart tbody').empty();
+            $.each(result, function(i,list) {
+                document.getElementById("lectureTable").style.visibility = "hidden";
+                document.getElementById("personalList").style.visibility = "visible";
+                $('#displayingPart #personalList').append('<tr><td>' + list.id + '</td><td>' + list.tittle + '</td><td>'+ list.description + '</td><td>' + list.teacher_info + '</td><td>' + list.lecture_date + '</td></tr>');
+            });
+            console.log("success",result);
+        },error:function (jqXHR, textStatus, errorThrown) {
+        }
+    });
+}
 $(function loggedUser() {
     $.ajax({
         url:"/loggedUser",
@@ -41,3 +57,4 @@ $(function loggedUser() {
         }
     });
 });
+

@@ -25,7 +25,6 @@ public class Student {
     @Column(nullable = false)
     private String password;
 
-
     private String role = "";
 
     @Column
@@ -36,7 +35,6 @@ public class Student {
 
     @Column
     private Integer index_number;
-
 
     private String permisions = "";
 
@@ -59,7 +57,7 @@ public class Student {
         this.name_of_studies = name_of_studies;
         this.index_number = index_number;
         this.permisions = permisions;
-        this.role = "student";
+        this.role = "ROLE_STUDENT";
     }
 
     public List<String>getRolesList() {

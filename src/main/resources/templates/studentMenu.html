@@ -33,7 +33,7 @@
 
                 <input type="number" id="addToList" name="addToList" placeholder="Add lecture id attendance">
                 <input class="optionButton" type="submit" value="Add to attendance" onclick="addToAttendancee()">
-                <input class="optionButton" type="submit" value="My attendance">
+                <input class="optionButton" type="submit" value="My attendance" onclick="personalStudentAttendencies()">
 
             <form method="post" th:action="@{/logout}">
                 <input class="optionButton" type="submit" value="Logout">
@@ -67,6 +67,22 @@
                     <th>Year_of_studies</th>
                     <th>Name_of_studies</th>
                     <th>Index_number</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+            <table class="tables" id="personalList" style="visibility: hidden">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Tittle</th>
+                    <th>Description</th>
+                    <th>Teacher_info</th>
+                    <th>Lecture_date</th>
                 </tr>
                 </thead>
                 <tbody>
