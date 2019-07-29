@@ -3,6 +3,7 @@ package com.kamil.dev_manager.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -15,16 +16,20 @@ public class Lecture {
     private Long id;
 
     @Column(nullable = false, unique = true)
+    @NotBlank(message = "tittle can`t be blank")
     private String tittle;
 
     @Column
+    @NotBlank(message = "description can`t be blank")
     private String description;
 
     @Column
-    private String teacher_info;
+    @NotBlank(message = "info about can`t be blank")
+    private String teacherInfo;
 
     @Column
-    private LocalDate lecture_date;
+    private LocalDate lectureDate;
+    
     @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.MERGE},mappedBy = "lecturesSet")
     private Set<Student> studentSet = new HashSet<>();
@@ -32,11 +37,11 @@ public class Lecture {
     public Lecture() {
     }
 
-    public Lecture(String tittle, String description, String teacher_info, LocalDate lecture_date) {
+    public Lecture(String tittle, String description, String teacherInfo, LocalDate lectureDate) {
         this.tittle = tittle;
         this.description = description;
-        this.teacher_info = teacher_info;
-        this.lecture_date = lecture_date;
+        this.teacherInfo = teacherInfo;
+        this.lectureDate = lectureDate;
     }
 
     public Set<Student> getStudentSet() {
@@ -71,20 +76,20 @@ public class Lecture {
         this.description = description;
     }
 
-    public String getTeacher_info() {
-        return teacher_info;
+    public String getteacherInfo() {
+        return teacherInfo;
     }
 
-    public void setTeacher_info(String teacher_info) {
-        this.teacher_info = teacher_info;
+    public void setteacherInfo(String teacherInfo) {
+        this.teacherInfo = teacherInfo;
     }
 
-    public LocalDate getLecture_date() {
-        return lecture_date;
+    public LocalDate getlectureDate() {
+        return lectureDate;
     }
 
-    public void setLecture_date(LocalDate lecture_date) {
-        this.lecture_date = lecture_date;
+    public void setlectureDate(LocalDate lectureDate) {
+        this.lectureDate = lectureDate;
     }
 
     @Override
@@ -93,8 +98,8 @@ public class Lecture {
                 "id=" + id +
                 ", tittle='" + tittle + '\'' +
                 ", description='" + description + '\'' +
-                ", teacher_info='" + teacher_info + '\'' +
-                ", lecture_date=" + lecture_date +
+                ", teacherInfo='" + teacherInfo + '\'' +
+                ", lectureDate=" + lectureDate +
                 ", studentSet=" + studentSet +
                 '}';
     }

@@ -5,9 +5,9 @@ function addNewStudent() {
         surname: $("#surname").val(),
         email: $("#email").val(),
         password: $("#password").val(),
-        year_of_studies: $("#year_of_studies").val(),
-        name_of_studies: $("#name_of_studies").val(),
-        index_number: $("#index_number").val()
+        yearOfStudies: $("#yearOfStudies").val(),
+        nameOfStudies: $("#nameOfStudies").val(),
+        indexNumber: $("#indexNumber").val()
     };
     console.log("post data " + model);
     $.ajax({
@@ -30,8 +30,8 @@ function addNewLecture() {
     model = {
         tittle: $("#tittle").val(),
         description: $("#description").val(),
-        teacher_info: $("#teacher_info").val(),
-        lecture_date: $("#lecture_date").val()
+        teacherInfo: $("#teacherInfo").val(),
+        lectureDate: $("#lectureDate").val()
     };
     console.log("post data " + model);
     $.ajax({

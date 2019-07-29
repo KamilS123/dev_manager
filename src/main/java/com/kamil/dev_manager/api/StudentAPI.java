@@ -42,6 +42,7 @@ public class StudentAPI {
 
     @GetMapping("/attendance")
     private ResponseEntity<List<Lecture>> showPersonalAttendance() throws ClassNotFoundException {
+        LOGGER.log(Level.INFO, "addToList");
         return new ResponseEntity<>(studentService.showStudentAttendancies(), HttpStatus.OK);
     }
 }

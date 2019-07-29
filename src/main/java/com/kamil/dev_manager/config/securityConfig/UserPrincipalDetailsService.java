@@ -21,9 +21,5 @@ public class UserPrincipalDetailsService implements UserDetailsService {
         UserPrincipal userPrincipal = new UserPrincipal(student);
 
         return userPrincipal;
-        /*Optional<Student> student = this.studentRepository.findByUsername(s);
-        student
-                .orElseThrow(()-> new UsernameNotFoundException("There is no student"));
-        return student.map(UserPrincipal::new).get();*/
     }
 }

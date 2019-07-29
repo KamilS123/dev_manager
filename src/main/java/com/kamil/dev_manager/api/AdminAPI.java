@@ -6,8 +6,12 @@ import com.kamil.dev_manager.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Email;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -41,6 +45,15 @@ public class AdminAPI {
         LOGGER.log(Level.INFO, "addStudent");
         return new ResponseEntity<>(adminService.addStudent(student), HttpStatus.CREATED);
     }
+    /*@PostMapping("/newStudent")
+    public Student addStudent(@RequestBody @Valid Student student, BindingResult bindingResult) {
+        *//*if (bindingResult.hasErrors()) {
+            return "excepFile";
+        }*//*
+        LOGGER.log(Level.INFO, "addStudent");
+
+        return adminService.addStudent(student);
+    }*/
 
     //delete student by id
     @DeleteMapping("/student/{id}")
@@ -59,7 +72,7 @@ public class AdminAPI {
 
     //add new Lecture
     @PostMapping("/newLecture")
-    public ResponseEntity<Lecture> addLecture(@RequestBody Lecture lecture) {
+    public ResponseEntity<Lecture> addLecture(@Valid @RequestBody Lecture lecture) {
         LOGGER.log(Level.INFO, "addLecture");
         return new ResponseEntity<>(adminService.addNewLecture(lecture), HttpStatus.CREATED);
     }

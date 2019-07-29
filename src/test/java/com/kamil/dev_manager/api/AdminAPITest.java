@@ -64,9 +64,9 @@ class AdminAPITest {
                 .andExpect(jsonPath("$.surname", is("Kowalski")))
                 .andExpect(jsonPath("$.email", is("win@wp.pl")))
                 .andExpect(jsonPath("$.password", is("admin")))
-                .andExpect(jsonPath("$.year_of_studies", is(2)))
-                .andExpect(jsonPath("$.name_of_studies", is("English")))
-                .andExpect(jsonPath("$.index_number", is(258256)));
+                .andExpect(jsonPath("$.yearOfStudies", is(2)))
+                .andExpect(jsonPath("$.nameOfStudies", is("English")))
+                .andExpect(jsonPath("$.indexNumber", is(258256)));
         verify(adminService, times(1)).getStudentById(6L);
     }
 
@@ -95,17 +95,17 @@ class AdminAPITest {
                 .andExpect(jsonPath("$[0].surname").value("Kowalski"))
                 .andExpect(jsonPath("$[0].email").value("win@wp.pl"))
                 .andExpect(jsonPath("$[0].password").value("admin"))
-                .andExpect(jsonPath("$[0].year_of_studies").value("2"))
-                .andExpect(jsonPath("$[0].name_of_studies").value("English"))
-                .andExpect(jsonPath("$[0].index_number").value(258256))
+                .andExpect(jsonPath("$[0].yearOfStudies").value("2"))
+                .andExpect(jsonPath("$[0].nameOfStudies").value("English"))
+                .andExpect(jsonPath("$[0].indexNumber").value(258256))
                 .andExpect(jsonPath("$[1].id").value(4))
                 .andExpect(jsonPath("$[1].username").value("Mike"))
                 .andExpect(jsonPath("$[1].surname").value("Nowicki"))
                 .andExpect(jsonPath("$[1].email").value("kon@wp.pl"))
                 .andExpect(jsonPath("$[1].password").value("student"))
-                .andExpect(jsonPath("$[1].year_of_studies").value("4"))
-                .andExpect(jsonPath("$[1].name_of_studies").value("Biology"))
-                .andExpect(jsonPath("$[1].index_number").value(123456));
+                .andExpect(jsonPath("$[1].yearOfStudies").value("4"))
+                .andExpect(jsonPath("$[1].nameOfStudies").value("Biology"))
+                .andExpect(jsonPath("$[1].indexNumber").value(123456));
         verify(adminService, times(1)).getAllStudents();
     }
 

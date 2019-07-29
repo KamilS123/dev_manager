@@ -14,7 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.context.WebApplicationContext;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
@@ -24,7 +23,7 @@ import java.util.logging.Logger;
 @Controller
 public class WebController {
 
-    private final Logger logger = Logger.getLogger(WebApplicationContext.class.getName());
+    private final Logger logger = Logger.getLogger(WebController.class.getName());
     @Autowired
     private AdminService adminService;
     @Autowired
@@ -52,6 +51,8 @@ public class WebController {
             case "ROLE_ADMIN":
                 returnedPlace = "mainMenu";
                 break;
+            default:
+                throw new IllegalArgumentException("undefined ROLE");
         }
         model.addAttribute("listWithLectures", studentService.getAllLectures());
         logger.log(Level.INFO, "mainMenu");

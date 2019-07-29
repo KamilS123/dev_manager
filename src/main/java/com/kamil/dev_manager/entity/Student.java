@@ -3,6 +3,8 @@ package com.kamil.dev_manager.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.util.*;
 
 @Entity
@@ -14,9 +16,11 @@ public class Student {
     private Long id;
 
     @Column(nullable = false,unique = true)
+    @NotBlank(message = "username can not be blank")
     private String username;
 
     @Column(nullable = false)
+    @NotBlank(message = "surname can not be blank")
     private String surname;
 
     @Column(unique = true)
@@ -28,15 +32,15 @@ public class Student {
     private String role = "";
 
     @Column
-    private Integer year_of_studies;
+    private Integer yearOfStudies;
 
     @Column
-    private String name_of_studies;
+    private String nameOfStudies;
 
     @Column
-    private Integer index_number;
+    private Integer indexNumber;
 
-    private String permisions = "";
+    private String permissions = "";
 
     @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST,CascadeType.MERGE})
@@ -48,16 +52,15 @@ public class Student {
     public Student() {
     }
 
-    public Student(String username, String surname, String email, String password, Integer year_of_studies, String name_of_studies, Integer index_number, String permisions) {
+    public Student(String username, String surname, String email, String password, Integer yearOfStudies, String nameOfStudies, Integer indexNumber, String permissions) {
         this.username = username;
         this.surname = surname;
         this.email = email;
         this.password = password;
-        this.year_of_studies = year_of_studies;
-        this.name_of_studies = name_of_studies;
-        this.index_number = index_number;
-        this.permisions = permisions;
-        this.role = "ROLE_STUDENT";
+        this.yearOfStudies = yearOfStudies;
+        this.nameOfStudies = nameOfStudies;
+        this.indexNumber = indexNumber;
+        this.permissions = permissions;
     }
 
     public List<String>getRolesList() {
@@ -67,10 +70,19 @@ public class Student {
     }
 
     public List<String>getPermisionsList() {
-        if (this.permisions.length() > 0) {
-            return Arrays.asList(this.permisions.split(","));
+        if (this.permissions.length() > 0) {
+            return Arrays.asList(this.permissions.split(","));
         }return new ArrayList<>();
     }
+
+    public String getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(String permissions) {
+        this.permissions = permissions;
+    }
+
     public Set<Lecture> getLecturesSet() {
         return lecturesSet;
     }
@@ -127,28 +139,28 @@ public class Student {
         this.role = role;
     }
 
-    public Integer getYear_of_studies() {
-        return year_of_studies;
+    public Integer getYearOfStudies() {
+        return yearOfStudies;
     }
 
-    public void setYear_of_studies(Integer year_of_studies) {
-        this.year_of_studies = year_of_studies;
+    public void setYearOfStudies(Integer yearOfStudies) {
+        this.yearOfStudies = yearOfStudies;
     }
 
-    public String getName_of_studies() {
-        return name_of_studies;
+    public String getNameOfStudies() {
+        return nameOfStudies;
     }
 
-    public void setName_of_studies(String name_of_studies) {
-        this.name_of_studies = name_of_studies;
+    public void setNameOfStudies(String nameOfStudies) {
+        this.nameOfStudies = nameOfStudies;
     }
 
-    public Integer getIndex_number() {
-        return index_number;
+    public Integer getIndexNumber() {
+        return indexNumber;
     }
 
-    public void setIndex_number(Integer index_number) {
-        this.index_number = index_number;
+    public void setIndexNumber(Integer indexNumber) {
+        this.indexNumber = indexNumber;
     }
 
     @Override
@@ -160,10 +172,10 @@ public class Student {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", role='" + role + '\'' +
-                ", year_of_studies=" + year_of_studies +
-                ", name_of_studies='" + name_of_studies + '\'' +
-                ", index_number=" + index_number +
-                ", permisions='" + permisions + '\'' +
+                ", yearOfStudies=" + yearOfStudies +
+                ", nameOfStudies='" + nameOfStudies + '\'' +
+                ", indexNumber=" + indexNumber +
+                ", permisions='" + permissions + '\'' +
                 ", lecturesSet=" + lecturesSet +
                 '}';
     }

@@ -14,8 +14,8 @@
 <form id="addingForm" th:action="@{/mainMenu}" method="post" style="width: 350px; height: 400px">
     <input type="text" id="tittle" name="tittle" placeholder="Tittle">
     <input type="text" id="description" name="description" placeholder="Description">
-    <input type="text" id="teacher_info" name="teacher_info" placeholder="Teacher info">
-    <input type="date" id="lecture_date" name="lecture_date" placeholder="Lecture date">
+    <input type="text" id="teacherInfo" name="teacherInfo" placeholder="Teacher info">
+    <input type="date" id="lectureDate" name="lectureDate" placeholder="Lecture date">
     <input type="submit" name="newStudent" value="Add Lecture" onclick="addNewLecture();">
     <div style="text-align: left"><a href="#" th:href="@{/mainMenu}"> Go back </a></div>
 </form>

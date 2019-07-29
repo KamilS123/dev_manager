@@ -52,9 +52,17 @@ public class AdminService {
 
     //adding new student to database
     public Student addStudent(Student student) {
-        //set up constatn schema
-        student.setRole("ROLE_STUDENT");
-        student.setPassword(passwordEncoder.encode(student.getPassword()));
+        Optional<Student> studentInDatabase = studentRepository.findAll().stream()
+                .filter(s -> s.getUsername().equals(student.getUsername()))
+                .findFirst();
+        if (studentInDatabase.isPresent()) {
+            throw new IllegalArgumentException("There is passed username already in database");
+        } else {
+            //set up constant schema
+            student.setRole("ROLE_STUDENT");
+            student.setPermissions("permitUser");
+            student.setPassword(passwordEncoder.encode(student.getPassword()));
+        }
         return studentRepository.save(student);
     }
 
@@ -67,14 +75,18 @@ public class AdminService {
     public Student editStudentDetails(Long id, Student student) {
         Optional<Student> studentToEdit = studentRepository.findById(id);
         Student editedStudent = studentToEdit.get();
-        editedStudent.setPassword(passwordEncoder.encode(student.getPassword()));
-        editedStudent.setRole("ROLE_STUDENT");
-        editedStudent.setEmail(student.getEmail());
-        editedStudent.setIndex_number(student.getIndex_number());
-        editedStudent.setSurname(student.getSurname());
-        editedStudent.setName_of_studies(student.getName_of_studies());
-        editedStudent.setYear_of_studies(student.getYear_of_studies());
-        editedStudent.setUsername(student.getUsername());
+        if (studentToEdit.isPresent()) {
+            editedStudent.setPassword(passwordEncoder.encode(student.getPassword()));
+            editedStudent.setRole("ROLE_STUDENT");
+            editedStudent.setEmail(student.getEmail());
+            editedStudent.setIndexNumber(student.getIndexNumber());
+            editedStudent.setSurname(student.getSurname());
+            editedStudent.setNameOfStudies(student.getNameOfStudies());
+            editedStudent.setYearOfStudies(student.getYearOfStudies());
+            editedStudent.setUsername(student.getUsername());
+        }else {
+            throw new NullPointerException("Student is not present");
+        }
         return studentRepository.save(editedStudent);
     }
 
@@ -85,7 +97,7 @@ public class AdminService {
                 .findAny()
                 .orElseThrow(() -> new NoSuchElementException("There is no choosen lecture!!!"));
         //compare lectures date
-        LocalDate lectureDate = lectureToDelete.getLecture_date();
+        LocalDate lectureDate = lectureToDelete.getlectureDate();
         LocalDate currentDate = LocalDate.now();
         if (lectureDate.isAfter(currentDate)) {
             lectureRepository.deleteById(id);
@@ -99,8 +111,8 @@ public class AdminService {
         Optional<Lecture> lectureToEdit = lectureRepository.findById(id);
         Lecture lecture = lectureToEdit.get();
         lecture.setDescription(passedLecture.getDescription());
-        lecture.setLecture_date(passedLecture.getLecture_date());
-        lecture.setTeacher_info(passedLecture.getTeacher_info());
+        lecture.setlectureDate(passedLecture.getlectureDate());
+        lecture.setteacherInfo(passedLecture.getteacherInfo());
         lecture.setTittle(passedLecture.getTittle());
         return lectureRepository.save(lecture);
     }

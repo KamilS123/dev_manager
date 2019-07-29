@@ -40,7 +40,6 @@ public class StudentService {
         authenticationPrincipal = SecurityContextHolder.getContext().getAuthentication();
         Student student;
         String authenticatedName = authenticationPrincipal.getName();
-
         //compare passed password if not equals throw exception
         if (newPassword.equals(repeatedNewPassword)) {
             //check if user have logged details
@@ -49,7 +48,6 @@ public class StudentService {
                     .map(Student::getId)
                     .findFirst()
                     .orElseThrow(() -> new UsernameNotFoundException("there is no logged user")));
-
             Long studentId = checkLoggedStudent.get();
             student = studentRepository.getStudentById(studentId);
             student.setPassword(passwordEncoder.encode(newPassword));
@@ -67,17 +65,14 @@ public class StudentService {
                 .findFirst()
                 .orElseThrow(() -> new ClassNotFoundException("There is no lecture with passed id!!!")));
         Lecture choosenLecture = listWithLectures.get();
-
         //check authenticated user if exist
         authenticationPrincipal = SecurityContextHolder.getContext().getAuthentication();
         String authenticatedName = authenticationPrincipal.getName();
-
         Optional<Student> listWithStudent = Optional.of(studentRepository.findAll().stream()
                 .filter(s -> s.getUsername().equals(authenticatedName))
                 .findFirst()
                 .orElseThrow(() -> new ClassNotFoundException("There is no logged user!!!")));
         Student loggedStudent = listWithStudent.get();
-
         //save to database
         choosenLecture.getStudentSet().add(loggedStudent);
         loggedStudent.getLecturesSet().add(choosenLecture);
@@ -96,9 +91,7 @@ public class StudentService {
         Long studentId = student.getId();
 
         List<Long> lecturesOnStudentList = studentRepository.allLecturesOnList(studentId);
-
         List<Lecture> allLecturesList = lectureRepository.findAll();
-
         List<Lecture> personalStudentListWithAttendancies = new ArrayList<>();
         int indexing = 0;
 
